@@ -1,0 +1,79 @@
+type http_request_result = 
+ record {
+   body: blob;
+   headers: vec http_header;
+   status: nat;
+ };
+type http_header = 
+ record {
+   name: text;
+   value: text;
+ };
+type UserSettings = record {aiEndpoint: text;};
+type UserRole = 
+ variant {
+   admin;
+   guest;
+   user;
+ };
+type UserProfile = record {name: text;};
+type TransformationOutput = 
+ record {
+   body: blob;
+   headers: vec http_header;
+   status: nat;
+ };
+type TransformationInput = 
+ record {
+   context: blob;
+   response: http_request_result;
+ };
+type Timestamp = int;
+type MessageRole = 
+ variant {
+   assistant;
+   user;
+ };
+type MessageId = nat;
+type Message = 
+ record {
+   content: text;
+   id: MessageId;
+   role: MessageRole;
+   timestamp: Timestamp;
+ };
+type ConversationSummary = 
+ record {
+   createdAt: Timestamp;
+   id: ConversationId;
+   lastMessagePreview: opt text;
+   title: text;
+   updatedAt: Timestamp;
+ };
+type ConversationId = nat;
+type ConversationDetail = 
+ record {
+   createdAt: Timestamp;
+   id: ConversationId;
+   messages: vec Message;
+   title: text;
+   updatedAt: Timestamp;
+ };
+service : {
+  _initializeAccessControl: () -> ();
+  assignCallerUserRole: (user: principal, role: UserRole) -> ();
+  createConversation: (title: text) -> (ConversationSummary);
+  deleteConversation: (id: ConversationId) -> (bool);
+  getCallerSettings: () -> (opt UserSettings) query;
+  getCallerUserProfile: () -> (opt UserProfile) query;
+  getCallerUserRole: () -> (UserRole) query;
+  getConversation: (id: ConversationId) -> (opt ConversationDetail) query;
+  getUserProfile: (user: principal) -> (opt UserProfile) query;
+  isCallerAdmin: () -> (bool) query;
+  listConversations: () -> (vec ConversationSummary) query;
+  renameConversation: (id: ConversationId, newTitle: text) -> (bool);
+  saveCallerSettings: (settings: UserSettings) -> ();
+  saveCallerUserProfile: (profile: UserProfile) -> ();
+  sendMessage: (conversationId: ConversationId, userMessage: text) -> (text);
+  transform: (input: TransformationInput) -> (TransformationOutput) query;
+}

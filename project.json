@@ -1,0 +1,21 @@
+{
+  "overview": "A robust AI chatbot web app with user accounts, login, and persistent chat history. Users can create and manage multiple conversations, send messages to an AI assistant, and view full history per account. Built with Internet Identity for secure authentication and HTTP outcalls for AI responses.",
+  "features": [
+    "Login with Internet Identity and persistent session",
+    "Create, rename, and delete conversations",
+    "AI-powered chat with streaming responses",
+    "Persistent chat history saved per user",
+    "Responsive sidebar layout with mobile support",
+    "Dark-themed conversational UI"
+  ],
+  "category": "productivity",
+  "tags": [
+    "chatbot",
+    "ai",
+    "user-accounts",
+    "chat-history",
+    "internet-identity",
+    "productivity"
+  ],
+  "last_updated": "2026-04-26T14:56:42.559Z"
+}
